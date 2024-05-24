@@ -1,8 +1,9 @@
 import React from 'react'
-import './Residencies.css'
-
 import data from '../../utils/slider.json'
-import { Swiper, SwiperSlide, useSwiper} from 'swiper/react'
+import { Swiper, SwiperSlide, useSwiper} from "swiper/react";
+import './Residencies.css'
+import "swiper/css";
+import { sliderSettings } from '../../utils/common';
 const Residencies = () => {
   return (
     <section className='r-wrapper'>
@@ -11,21 +12,23 @@ const Residencies = () => {
             <div className='r-head flexColStart'>
                 <span className='orangeText'>Best Choices</span>
                 <span className='primaryText'>Popular Residences</span>
-
             </div>
 
-            <Swiper >
+            <Swiper {...sliderSettings}>
+                <sliderButtons />
                 {
                     data.map((card, i) => {
                         return (
                             <SwiperSlide key={i}>
-                                <div className='r-card'>
+                                <div className='r-card flexColStart'>
                                     <img src={card.image} alt='home' />
                                         
                                         <span className='secondaryText r-price'>
                                             <span>$</span><span>{card.price}</span>
                                         </span>
-                                    
+
+                                        <span className='primaryText'>{card.name}</span>
+                                        <span className='secondaryText'>{card.detail}</span>
                                 </div>
                             </SwiperSlide>
                         )
@@ -38,3 +41,13 @@ const Residencies = () => {
 }
 
 export default Residencies
+
+const sliderButtons = () => {
+    const swiper = useSwiper();
+    return (
+        <div className=' r-buttons'>
+            <button onClick={() => swiper.slidePrev()} > &lt;</button>
+             <button onClick={() => swiper.slideNext()}> &gt; </button>
+        </div>
+    )
+}
